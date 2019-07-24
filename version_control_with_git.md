@@ -1,18 +1,18 @@
 # Version Control with Git
 
-*Nik Hartman*
-*Manfra Lab group meeting -- July 24 2019*
+*Nik Hartman*  
+*Manfra Lab group meeting*
 
 ## Setup
 
 * Bring a laptop. (I'm working under the assumption that everyone has a Windows machine.)
 * Know how to open the Windows Command Prompt or PowerShell
 * **Install Git** for Windows: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
-* Editors (4 suggestions, make sure at least one is installed):
-  * Vim – It’s everywhere. If you want to edit plain text from the command line, this is your best bet. There is a *steep* learning curve. **Vim can be installed along with Git. Do it.**
+* Popular editors:
+  * Vim – If you want to edit plain text from the command line, this is your best bet. There is a *steep* learning curve. **Vim can be installed along with Git. Do it.**
   * Emacs – The mortal enemy of vim. I don’t like it. Lots of people do. Don’t @ me.
-  * Notepad++ -- an editor with a nice GUI made specifically for Windows. This is how I learned to program.
-  * **Atom** – Editor made by the people at GitHub for all platforms. Modern features, integrates well with Git. Personal favorite. I use it throughout this tutorial.
+  * Notepad++ -- An editor with a nice GUI made specifically for Windows. This is how I learned to program.
+  * **Atom** – Editor made by the people at GitHub for all platforms. Modern features, integrates well with Git, LaTex/Markdown previews, and lots of other plugins. Personal favorite. I use it throughout this tutorial.
 
 ## Why do we need version control?
 
@@ -31,10 +31,15 @@ Version control gives us a way out of this mess (if you get that old bald guy to
 
 * A folder (**repository**) is labelled for version control. All documents and subfolders within can be tracked for changes.
 * Each change to a document is recorded independently (**commit**) by storing the difference (**diff**) between the current and previous version.
+
 ![](./images/git_straight_tracking.png)
+
 * The history can be split into two different versions (**branches**) each of which will be tracked independently. This feature allows collaborators to work simultaneously or multiple ideas to be tested in parallel.
+
 ![](./images/git_branch_tracking.png)
+
 * You can incorporate (**merge**) two sets of changes into the same base document. Attempting to merge conflicting changes will prompt user to choose between conflicting versions of text (more later). In general, Git is very smart about resolving complicated merge commands. [See this blog post for a summary](https://blog.jcoglan.com/2017/02/12/the-myers-diff-algorithm-part-1/).
+
 ![](./images/git_branch_merging.png)
 
 ## Setup Git
@@ -42,13 +47,13 @@ Version control gives us a way out of this mess (if you get that old bald guy to
 Here I assume you have already installed `git` on Windows. The first part of the setup is to set your user information, so that `git` knows who is making changes to the repositories.
 
 ```
-> git config --global user.name "Vlad Dracula"
-> git config --global user.email "vlad@tran.sylvan.ia"
+> git config --global user.name "Nik Hartman"
+> git config --global user.email "nik.hartman@gmail.com"
 ```
 
-This will set the user nameand email for all repositories on your computer. Not recommended on a lab computer.
+This will set the user name and email for all repositories on your computer. Not recommended on a lab computer.
 
-Next we will set up rules for line endings. In Windows new line characters are carriage return + line feed (`CRLF` or `\r\n`). On Unix systems a new line is `LF` (or `\n`) only. Version control should be agnostic to this. Set Git on Windows machine to checkout line endings as `CRLF` but commit line endings as `LF`.
+Next we will set up rules for line endings. In Windows, new lines are two characters, carriage return + line feed (written `CRLF` or `\r\n`). On Unix systems, a new line is a line feed character only (`LF` or `\n`) only. Version control should be agnostic to this. Set Git on Windows machine to checkout line endings as `CRLF` but commit line endings as `LF`.
 
 ```
 > git config --global core.autocrlf true
@@ -79,9 +84,9 @@ Now that `git` is installed and setup, create a repository in a folder on the De
 > cd planets
 ```
 
-Use `dir` to list the contents of the folder. Should only contain `.` and `..`
+Use `dir` to list the contents of the folder, which should only contain `.` and `..`
 
-Now initialize a `git` repository (**repo**) in the folder.
+Initialize a `git` repository (**repo**) in the `planets` folder.
 
 ```
 git init
@@ -89,7 +94,7 @@ git init
 Check again what is in the folder with `dir`. Still nothing. Check one more time with `dir /a`. You should see a hidden folder called `.git`. This folder will contain all of the version history information for the repository (commits, branches, ...).
 
 ----
-#### What if I screwed this up?
+##### What if I screwed this up?
 
 Delete the `.git` folder. Try again.
 
@@ -163,7 +168,7 @@ The `-a` flag will add all changes to the repository. This is how I work all the
 * git commit saves the staged content as a new commit in the local repository.
 * Write a commit message that accurately describes your changes.
 
-# Exploring history
+## Exploring history
 
 There is a lot to this. I recommend using a GUI (either Atom, GitHub, or DevOps). Using `git diff` in the command line can be cumbersome and confusing if you aren't used to it.
 
@@ -191,7 +196,7 @@ In addition to checking out old versions from commits, you can use `revert` to r
 * git diff displays differences between commits.
 * git checkout recovers old versions of files.
 
-# Ignoring Files
+## Ignoring Files
 
 Along with your `.git` folder. A `.gitignore` file can be created to ignore files and folders in the repository, that is, changes to those will not be tracked.
 
@@ -216,7 +221,7 @@ If you make changes to your `.gitignore` file, you will need to add remove files
 
 The first line stops tracking everything. The second line starts tracking everything that is not ignored.
 
-# Syncing with remote repositories
+## Syncing with remote repositories
 
 ### Create a new repository
 
@@ -341,7 +346,7 @@ Elon Musk will never land there.
 
 Then commit the changes and try to merge (or push) a second time.
 
-# Closing comments
+## Closing comments
 
 This is a very basic tutorial. Git has many more powerful features. I promise it will be worth your time to keep trying. Google is helpful. Godspeed.
 

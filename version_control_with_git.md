@@ -53,13 +53,13 @@ Here I assume you have already installed `git` on Windows. The first part of the
 
 This will set the user name and email for all repositories on your computer. Not recommended on a lab computer.
 
-Next we will set up rules for line endings. In Windows, new lines are two characters, carriage return + line feed (written `CRLF` or `\r\n`). On Unix systems, a new line is a line feed character only (`LF` or `\n`) only. Version control should be agnostic to this. Set Git on Windows machine to checkout line endings as `CRLF` but commit line endings as `LF`.
+Next we will set up rules for line endings. In Windows, new lines are two characters, carriage return + line feed (written `CRLF` or `\r\n`). On Unix systems, a new line is a line feed character (`LF` or `\n`) only. Version control should be agnostic to this. Setup `git` on Windows machine to checkout line endings as `CRLF` but commit line endings as `LF`.
 
 ```
 > git config --global core.autocrlf true
 ```
 
-Finally, we can set the default text editor. This editor will be automatically called when a commit message is needed or a merge conflict needs to be solved. Here I suggest `Atom`, unless you already know `vim`.
+Finally, we can set the default text editor. This editor will be automatically called when a commit message is needed or a merge conflict needs to be resolved. I suggest Atom, unless you feel like you really want to work in the command prompt all the time, then use vim, you stubborn maniac.
 
 ```
 > git config --global core.editor “atom --wait”
@@ -76,7 +76,7 @@ To check the configuration of `git` on your machine, the following two commands 
 
 ## Creating a repository
 
-Now that `git` is installed and setup, create a repository in a folder on the Desktop and navigate into it.
+Now that `git` is installed and setup, create a repository in a new folder on the Desktop and navigate into it.
 
 ```
 > cd %USERPROFILE%\Desktop
@@ -110,6 +110,7 @@ Now to create some content and track changes to it.
 ```
 atom mars.txt
 ```
+
 Atom should open with a blank document titled `mars.txt`. Add some text to that document and save it.
 
 Now use `dir` in the command line to check the file exists and is not empty. To print the contents, use `type mars.txt`.
@@ -120,13 +121,13 @@ Check the status of the git repository:
 git status
 ```
 
-This should give some information that there is an untracked file. Add the file explicitly;
+This should give some information that there is an untracked file. Add that file explicitly;
 
 ```
 git add mars.txt
 ```
 
-Or, use a wildcard to add all files:
+Or, use a wildcard `.` to add all files:
 
 ```
 git add .
@@ -138,7 +139,7 @@ Now check `git status` again. The file is being tracked, but no changes/history 
 git commit -m "start notes on Mars"
 ```
 
-This takes all changes that were added in the `git add` command and stores a copy inside `.git`. Each copy committed has a unique identifier (see command line output).
+This takes all changes that were added in the `git add` command and stores a copy inside `.git`. Each copy committed has a unique identifier (SHA string) (see command line output).
 
 The `-m` flag (for message) is a short explaination (to future you) describing the changes.
 
@@ -148,9 +149,7 @@ The idea is to add changes to the staging area, check them, then commit them.
 
 ![](./images/git-staging-area.svg)
 
-Practically, there are some shortcuts for this that save all the add steps...
-
-Make another change to `mars.txt`. Add the change with `git add mars.txt`. Check the staged changes with `git diff --staged`. `git diff` has a lot of useful features for displaying changes (so does Atom), check the help pages. And finally, commit the changes `> git commit -am "edits to mars notes"`.
+Make another change to `mars.txt`. Add the change with `git add mars.txt`. Check the staged changes with `git diff --staged`. `git diff` has a lot of useful features for displaying changes, check the help pages. And finally, commit the changes `> git commit -am "edits to mars notes"`.
 
 That's a lot to do every time. You can shorten this by adding all changes at once `git add .`. You can skip the `git diff` step, if you feel confident you remember what you changed (you can go back later). Even better, you can do all of this in one line...
 
@@ -170,7 +169,7 @@ The `-a` flag will add all changes to the repository. This is how I work all the
 
 ## Exploring history
 
-There is a lot to this. I recommend using a GUI (either Atom, GitHub, or DevOps). Using `git diff` in the command line can be cumbersome and confusing if you aren't used to it.
+There is a lot to this. I recommend using a GUI (either Atom, GitHub, or DevOps). Using `log` and `diff` in the command line can be cumbersome and confusing if you aren't used to it.
 
 
 ### Recovering Older Versions of a File
@@ -183,18 +182,20 @@ Again, using a GUI here might be helpful. The workflow is something like this...
 3. Recover changes with one of the following commands
 ```
 > git checkout HEAD mars.txt
-> git checkout <unique ID of last commit> mars.txt
+```
+```
+> git checkout <unique ID of commit> mars.txt
 ```
 This will checkout an old version of `mars.txt`. From here you can add and commit more changes as usual.
 
 If you run `checkout` without specifying a file, you'll be put into a "detached HEAD" state, where you can look around but not save changes. From this state you can create a new branch based on the commit you checked out `git checkout -b <new-branch-from-old-commit>`.
 
-In addition to checking out old versions from commits, you can use `revert` to roll undo a previous commit. If you start with state `a` the commit changes `b` reverting `b` will create a new commit `c` in which the content is idential to `a` but all the history is preserved.
+In addition to checking out old versions from commits, you can use `revert` to undo a previous commit. If you start with state `a`, then commit changes `b`, reverting `b` will create a new commit `c` in which the content is identical to `a` but all the history is preserved.
 
 ##### Important points
 
-* git diff displays differences between commits.
-* git checkout recovers old versions of files.
+* `git diff` displays differences between commits.
+* `git checkout` recovers old versions of files.
 
 ## Ignoring Files
 
@@ -230,7 +231,7 @@ Going to try to focus on DevOps here (because that is where the Manfra Lab code 
 1. Sign in to https://dev.azure.com with your Microsoft credentials.
 2. Create a new project called `planets` that has `Public` permissions.
 3. Copy the URL in the `Clone to your computer` section.
-4. Run the following in the planets folder...
+4. Run the following in the `planets` folder...
 ```
 > git remote add origin https://nikhartman@dev.azure.com/nikhartman/planets/_git/planets
 > git push -u origin --all
@@ -239,17 +240,17 @@ We have now copied our local `planets` repo to DevOps. From your local machine t
 
 ### Copy an existing repository
 
-If you want to contribute to an existing project, there are two ways to do it. Follow the project guidelines for contributing or choose option 2 by default (especially if you do not know the people who maintain the project).
+If you want to contribute to, or use, an existing project, there are two ways to do it. Follow the project guidelines for contributing or choose option 2 by default (especially if you do not know the people who maintain the project).
 
 ##### Option 1
 
 1. Go to the repository of interest (try https://dev.azure.com/nikhartman/lab-tutorial) and copy the `git clone` link.
-2. In a command line, navigate to the directory which you want to contain the repository.
+2. In a command line, navigate to the directory that you want to contain the repository.
 3. To create a local copy of the repository, run:
 ```
 > git clone https://nikhartman@dev.azure.com/nikhartman/lab-tutorial/_git/lab-tutorial
 ```
-4. The local copy automatically uses the remote URL and names it `origin`.
+4. The local repo automatically contains a remote version (at the specified URL) named `origin`. You can check that is true by running `git remote -v`.
 
 ##### Option 2
 
@@ -257,9 +258,9 @@ If you want to contribute to an existing project, there are two ways to do it. F
 2. This creates a copy of the DevOps repository in *your* DevOps account.
 3. Now follow the steps of Option 1 to make a local copy of the fork you just created.
 4. In the local copy, `origin` will refer to the forked repository in *your* DevOps account.
-5. Add a second remote using the `git clone` link from the *original* repository.
+5. Add a second remote using the `git clone` link from the *source* repository.
 ```
-> git remote add upstream <clone-link-from-sorce-repo>
+> git remote add upstream <clone-link-from-source-repo>
 ```
 6. Now your local repository is connected to two remote repositories: `origin` which refers to the repository in _your_ DevOps account and `upstream` which refers to the _source_ that you forked.
 
@@ -293,16 +294,17 @@ This will take changes `A`, `B`, and `C`, and replay them on top of `H`, prompti
 
 ##### Remote repository
 
-If you are collaborating with others, it is best to work and push changes only to your own branch. For example, if you hvae made changes in the `topic` branch, use the following to push those changes to `origin`:
+If you are collaborating with others, it is best to work and push changes only to your own branch. For example, if you have made changes in the `topic` branch, use the following to push those changes to `origin`:
 
 ```
 git push origin topic
 ```
+
 That will incorporate all your commits from the local `topic` branch to a remote `topic` branch of the same name.
 
-If you want to merge your changes from `topic` into master on `origin` , DO NOT PUSH TO MASTER!!!! Instead, use the `Pull Request` features in DevOps so that other users of the repository can comment on your work before you change the `master` branch, which people may be relying on to do their own work.
+If you want to merge your changes from `topic` into master on `origin`, DO NOT PUSH TO MASTER!!!! Instead, use the `Pull Request` feature in DevOps so that other users of the repository can comment on your work before you change the `master` branch, which people may be relying on to do their own work.
 
-This is similar for `upstream`. The fork->clone->contribute model is how most popular open source software gets developed. If I want to make a change to `numpy`, I test it locally by checking if it is compatible with the most recent `upstream/master`, push it to `origin`, then make a pull request from `origin/topic` using the web interface. This way the maintainers of `numpy` can review my changes and decide if they are worth incorporating.
+This is similar for `upstream`. The fork->clone->contribute model is how most popular open source software gets developed. If I want to make a change to `numpy`, I test it locally by checking if it is compatible with the most recent `upstream/master`, push it to `origin`, then make a pull request from `origin/topic` to `upstream/master` using the web interface. This way the maintainers of `numpy` can review my changes and decide if they are worth incorporating.
 
 ### Incorporating remote changes to local copy
 
@@ -325,10 +327,10 @@ The most common problem you will find looks something like the following...
 
 ![](./images/conflict.svg)
 
-To fix this, pull changes from the red branch into the green branch, then solve the conflicts manual in your favorite editor. T
+To fix this, pull changes from the red branch into the green branch, then solve the conflicts manual in your favorite editor. The conflicting lines will look something like this:
 
 ```
-Here is some text about planets.
+Here is some text about Mars.
 Mars is red.
 <<<<<<< HEAD
 I think Elon Musk will land there.
@@ -339,7 +341,7 @@ Elon Musk will never land there.
 We can resolve this conflict by picking the line we want to keep and deleting the other crap.
 
 ```
-Here is some text about planets.
+Here is some text about Mars.
 Mars is red.
 Elon Musk will never land there.
 ```

@@ -149,7 +149,10 @@ The idea is to add changes to the staging area, check them, then commit them.
 
 ![](./images/git-staging-area.svg)
 
-Make another change to `mars.txt`. Add the change with `git add mars.txt`. Check the staged changes with `git diff --staged`. `git diff` has a lot of useful features for displaying changes, check the help pages. And finally, commit the changes `> git commit -am "edits to mars notes"`.
+Make another change to `mars.txt`. Add the change with `git add mars.txt`. Check the staged changes with `git diff --staged`. `git diff` has a lot of useful features for displaying changes, check the help pages. And finally, commit the changes
+```
+> git commit -m "edits to mars notes"
+```
 
 That's a lot to do every time. You can shorten this by adding all changes at once `git add .`. You can skip the `git diff` step, if you feel confident you remember what you changed (you can go back later). Even better, you can do all of this in one line...
 
@@ -161,10 +164,10 @@ The `-a` flag will add all changes to the repository. This is how I work all the
 
 ##### Important points:
 
-* git status shows the status of a repository.
+* `git status` shows the status of a repository.
 * Files can be stored in a project’s working directory (which users see), the staging area (where the next commit is being built up) and the local repository (where commits are permanently recorded).
-* git add puts files in the staging area.
-* git commit saves the staged content as a new commit in the local repository.
+* `git add` puts files in the staging area.
+* `git commit` saves the staged content as a new commit in the local repository.
 * Write a commit message that accurately describes your changes.
 
 ## Exploring history
@@ -290,7 +293,7 @@ We can run the commands
 git checkout master
 git merge topic
 ```
-This will take changes `A`, `B`, and `C`, and replay them on top of `H`, prompting you if there are any errors.
+This will take changes `A`, `B`, and `C`, and replay them on top of `G`, prompting you if there are any errors.
 
 ##### Remote repository
 
@@ -314,7 +317,7 @@ Frequently, you will want to update your local repository to include changes on 
 > git pull origin <branch-name>
 ```
 
-`pull` is really two commands at once, `fetch` followed by `pull`. `git fetch origin/<branch-name>` will make sure your local repo knows about all the up-to-date changes in `origin/<branch-name>`. Then `git merge origin/<branch-name>` will replay those remote commits onto the local branch that you currently have checked out.
+`pull` is really two commands at once, `fetch` followed by `merge`. `git fetch origin/<branch-name>` will make sure your local repo knows about all the up-to-date changes in `origin/<branch-name>`. Then `git merge origin/<branch-name>` will replay those remote commits onto the local branch that you currently have checked out.
 
 # Conflicts
 
